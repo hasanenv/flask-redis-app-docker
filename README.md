@@ -7,22 +7,22 @@
 ## Demo GIF:
 ![Demo (GIF)](assets/demo.gif)
 
-A containerised web app built with Flask and Redis using Docker Compose. The Flask service connects to a Redis database to count and store page visits.
+A containerised web app built with Flask and Redis using Docker Compose. The Flask service connects to a Redis database to count and store page visits. Data is persisted between container restarts using a Docker volume.
 
 ---
 
 ## Features
-- Flask web app container running locally on port 5000  
-- Redis container for view count storage  
+- Flask web app container running locally on port 5000
+- Redis container for view count storage with persistent volume 
 - Docker Compose for orchestration and network configuration  
-- Lightweight and easily extendable setup
 
 ---
 
 ## How It Works
 - The Flask app handles HTTP requests and displays the current view count.  
 - Redis stores and increments the counter each time the page is accessed.  
-- Both containers communicate through Docker’s internal network using the service name `redis` as the hostname.
+- Both containers communicate through Docker’s internal network using the service name `redis` as the hostname.  
+- Redis data is persisted using a Docker volume, so counts are retained even if containers are stopped or rebuilt.
 
 ---
 
@@ -58,15 +58,14 @@ This variable tells Flask the hostname of the Redis service within the Docker ne
 
 ## Stack
 - **Python (Flask)** – web framework  
-- **Redis** – in-memory data store  
+- **Redis** – in-memory data store with persistent volume  
 - **Docker / Docker Compose** – containerisation and orchestration
 
 ---
 
 ## Future Enhancements/Considerations
-- Add a persistent Redis volume to retain data after restarts  
-- Include a basic HTML template for better presentation  
-- Deploy to a cloud service such as AWS ECS or Azure Container Apps
+- Add a basic HTML template for better presentation  
+- Deploy to a cloud service such as AWS ECS
 
 ---
 
@@ -77,7 +76,7 @@ flask-redis-app/
 │  
 ├── app.py – Flask application  
 ├── Dockerfile – Build instructions for Flask container  
-├── docker-compose.yml – Multi-container setup  
+├── docker-compose.yml – Multi-container setup with Redis volume
 ├── requirements.txt – Python dependencies  
 └── README.md  
 ```
